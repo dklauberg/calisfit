@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import BottomNav from "@/components/BottomNav";
 import WorkoutCalendar from "@/components/WorkoutCalendar";
+import DeleteLogButton from "@/components/DeleteLogButton";
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -145,12 +146,15 @@ export default async function DashboardPage() {
                     </p>
                   </div>
                   {!log.finishedAt && (
-                    <Link
-                      href={`/workouts/${log.workout.id}`}
-                      className="btn-yellow text-xs py-1.5 px-3 shrink-0"
-                    >
-                      Continuar
-                    </Link>
+                    <div className="flex gap-2 shrink-0">
+                      <Link
+                        href={`/workouts/${log.workout.id}`}
+                        className="btn-yellow text-xs py-1.5 px-3"
+                      >
+                        Continuar
+                      </Link>
+                      <DeleteLogButton logId={log.id} />
+                    </div>
                   )}
                 </div>
               ))}
