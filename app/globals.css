@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --yellow: #FFDE02;
+  --black: #07070A;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: #ffffff;
+  color: #07070A;
+  font-family: var(--font-geist-sans), sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: #07070A;
+  border-radius: 3px;
+}
+
+@layer components {
+  .btn-yellow {
+    @apply bg-brand-yellow text-brand-black font-bold uppercase text-sm px-4 py-2 rounded-xl hover:opacity-90 transition-opacity;
+  }
+  .btn-black {
+    @apply bg-brand-black text-white font-bold uppercase text-sm px-4 py-2 rounded-xl hover:opacity-80 transition-opacity;
+  }
+  .card-black {
+    @apply bg-brand-black text-white rounded-2xl;
+  }
+  .label-muscle {
+    @apply text-xs px-2 py-0.5 rounded-full border border-white/20 text-white/70;
+  }
+}
