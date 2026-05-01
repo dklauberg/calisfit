@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useCallback } from "react";
 import ReactPlayer from "react-player/youtube";
 
 interface VideoPlayerProps {
@@ -14,6 +14,17 @@ export default function VideoPlayer({ url, exerciseName, repsBadge }: VideoPlaye
   const [duration, setDuration] = useState(0);
   const [playing, setPlaying] = useState(false);
   const playerRef = useRef<ReactPlayer>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  const handleFullscreen = useCallback(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      el.requestFullscreen?.();
+    }
+  }, []);
 
   function formatTime(secs: number) {
     const m = Math.floor(secs / 60);
@@ -26,7 +37,7 @@ export default function VideoPlayer({ url, exerciseName, repsBadge }: VideoPlaye
   }
 
   return (
-    <div className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden group">
+    <div ref={containerRef} className="relative w-full aspect-video bg-black rounded-2xl overflow-hidden group">
       <ReactPlayer
         ref={playerRef}
         url={url}
@@ -71,10 +82,7 @@ export default function VideoPlayer({ url, exerciseName, repsBadge }: VideoPlaye
               )}
             </button>
             <button
-              onClick={() => {
-                const el = document.querySelector(".player-wrapper") as HTMLElement;
-                el?.requestFullscreen?.();
-              }}
+              onClick={handleFullscreen}
               className="bg-white/20 hover:bg-white/30 rounded-full p-2 transition-colors"
             >
               <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
